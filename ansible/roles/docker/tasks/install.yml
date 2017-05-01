@@ -9,17 +9,17 @@
     update_cache: yes
     cache_valid_time: 1800
   with_items:
-    - apt-xxxxxxx
-    - ca-xxxxxxx 
-    - xxxxxxx
-    - xxxxxxx
+    - apt-transport-https         #altered
+    - ca-certificates             #altered
+    - curl                        #altered
+    - software-properties-common  #altered
 
 # Add docker's GPG key
 # http://docs.ansible.com/ansible/apt_key_module.html
 - name: Setup docker repository key
   apt_key:
     id: 0EBFCD88
-    url: xxxxxxx
+    url: https://download.docker.com/linux/ubuntu/gpg #altered
     state: present
   notify: apt-get update
 
@@ -36,14 +36,14 @@
 - name: Add docker repo
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ release.stdout }} stable
-    state: xxxxxxx
-    filename: docker
-  notify: xxxxxxx
+    state: present    #altered
+    filename: docker  #altered
+  notify: apt-get update  #altered
 
 # Install the docker service.  Fix the name of the package.
 # http://docs.ansible.com/ansible/apt_module.html
 - name: Install the latest version of docker community edition
   apt:
-    pkg: docker-xxxxxxx
+    pkg: docker-ce  #altered
     update_cache: yes
     cache_valid_time: 1800
